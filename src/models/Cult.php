@@ -1,30 +1,19 @@
 <?php
   class Cult {
-    private $name;
-    private $date;
-    private $hour;
 
-    public function setName($name) {
-      $this->name = $name;
+    public function getCults() {
+      $conn = new Connection();
+      $slq = "SELECT * FROM cultos";
+      $stmt = $conn->connect()->prepare($slq);
+      $result = $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function setDate($date) {
-      $this->date = $date;
-    }
-
-    public function setHour($hour) {
-      $this->hour = $hour;
-    }
-
-    public function getName() {
-      return $this->name;
-    }
-
-    public function getMyDate() {
-      return $this->date;
-    }
-
-    public function getHour() {
-      return $this->hour;
+    public function createCult($titulo, $data, $horario, $fileUrl){
+      $conn = new Connection();
+      $slq = "INSERT INTO cultos (titulo, data, horario, fileUrl) values ('$titulo','$data','$horario','$fileUrl')";
+      $stmt = $conn->connect()->prepare($slq);
+      $result = $stmt->execute();
+      return $result;
     }
   }
