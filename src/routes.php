@@ -15,13 +15,22 @@
 	}
 
 	if ($method === 'POST') {
+		
 		$title = $_POST['title'];
 		$data = $_POST['data'];
 		$hour = $_POST['hour'];
-		$file = $_POST['file'];
-	
-		$cult = new Cult();
-		$newCult = $cult->createCult($title, $data, $hour, $file);
+		$file = $_FILES['file'];
 		
-		echo($newCult);
+		$target_file = './uploads/' . basename($file['name']);
+		
+		if (move_uploaded_file($file["tmp_name"], $target_file)) {
+			echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+		} else {
+			echo "Sorry, there was an error uploading your file.";
+		}
+	
+		// $cult = new Cult();
+		// $newCult = $cult->createCult($title, $data, $hour, $file);
+		
+		// echo($newCult);
 	}
